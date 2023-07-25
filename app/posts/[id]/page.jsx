@@ -3,9 +3,12 @@ import PostTitle from "@/app/components/PostTitle";
 import { API } from "@/app/constants";
 import { getImage } from "@/app/services/images";
 import Image from "next/image";
+import { BiUserCircle } from "react-icons/bi";
 
 async function getPostDetails(id) {
-  const response = await fetch(`${API}/posts/${id}?_embed=comments`);
+  const response = await fetch(
+    `${API}/posts/${id}?_embed=comments&_expand=user`
+  );
   return response.json();
 }
 
@@ -13,6 +16,23 @@ const NavBackLink = ({ id, page }) => (
   <nav className="my-6">
     <TextLink href={`/posts?_page=${page}#${id}`}>&lt; Back to posts</TextLink>
   </nav>
+);
+
+const UserAvatar = ({ name }) => {
+  const imgUrl = `https://ui-avatars.com/api/?name=${name.replace(
+    " ",
+    "+"
+  )}&rounded=true`;
+  return <Image src={imgUrl} width={24} height={24} alt={name} />;
+};
+
+const AuthorLink = ({ user }) => (
+  <TextLink href={`/user/${user.id}`}>
+    <div className="inline-flex gap-2 items-center mt-2 mb-8">
+      <UserAvatar name={user.name} />
+      <span>{user.name}</span>
+    </div>
+  </TextLink>
 );
 
 const PostDetails = async ({
@@ -34,7 +54,8 @@ const PostDetails = async ({
           />
           <NavBackLink id={id} page={_ref_page} />
           <PostTitle>{details.title}</PostTitle>
-          <p>{details.body}</p>
+          <AuthorLink user={details.user} />
+          <p className="mb-8">{details.body}</p>
         </article>
       </section>
 
