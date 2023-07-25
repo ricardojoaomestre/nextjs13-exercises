@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <main className="max-h-screen flex flex-col items-center">
           <TopBar />
-          <div className="mt-28">{children}</div>
+          <div className="mt-28 max-w-2xl">{children}</div>
           <Footer />
         </main>
       </body>
