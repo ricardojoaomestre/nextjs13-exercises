@@ -10,8 +10,8 @@ async function getPostDetails(id) {
 }
 
 const NavBackLink = ({ id, page }) => (
-  <nav className="mt-6">
-    <TextLink href={`/posts?_page=${page}#${id}`}>Back to posts</TextLink>
+  <nav className="my-6">
+    <TextLink href={`/posts?_page=${page}#${id}`}>&lt; Back to posts</TextLink>
   </nav>
 );
 
